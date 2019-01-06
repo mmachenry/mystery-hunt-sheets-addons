@@ -8,7 +8,7 @@ function normalizeString(text) {
 // NTH("Hello, world!", 6) => "W"
 function nth(text, n) {
   if (n < 1 || n > text.length) return '?'
-  return NORMALIZE_STRING(text).slice(n - 1, n);
+  return normalizeString(text).slice(n - 1, n);
 }
 
 // Returns the Caeser shifted string, ignoring non alphabetic letters.
