@@ -11,6 +11,26 @@ function nth(text, n) {
   return normalizeString(text).slice(n - 1, n);
 }
 
+// Returns the number of times a given character appears in a given string.
+// countChar("abaab", "a") => 3
+function countChar(text, char) {
+  let total = 0;
+  for (let i = 0; i < text.length; ++i) {
+  	if (char === text[i]) ++total;
+  }
+  return total;
+}
+
+// Given two strings, return all characters that appear in the same place in both strings.
+// commonChars("ghxxhxh", "ghyyh") => "ghh"
+function commonChars(x, y) {
+	let ret = [];
+	for (let i = 0; i < x.length && i < y.length; ++i) {
+		if (x[i] == y[i]) ret.push(x[i]);
+	}
+	return ret.join("");
+}
+
 // Returns the Caeser shifted string, ignoring non alphabetic letters.
 function caeserShift (offset, input) {
   var result = [];
