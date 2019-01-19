@@ -95,3 +95,14 @@ function reverseString(str) {
     var joinArray = reverseArray.join("");
     return joinArray;
 }
+
+// The unique characters of the given string.
+function uniqueChars(text) {
+    var unique= "";
+    for(var i = 0; i < text.length; i++) {
+        if(unique.indexOf(text.charAt(i)) < 0) {
+            unique += text.charAt(i);
+        }
+    }
+    return unique;
+}
