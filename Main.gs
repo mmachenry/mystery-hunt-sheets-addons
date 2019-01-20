@@ -106,3 +106,89 @@ function uniqueChars(text) {
     }
     return unique;
 }
+
+/**
+ * Looks up text in wikipedia page infobox table.
+ *
+ * @param {text} The wikipedia page to look up, either a Wikipedia url or a title.
+ * @param {text} The key to look up e.g. "Born" for birth date.
+ * @return The Wikipedia infobox info for a specific key.
+ * @customfunction
+ */
+function wikiLookup(wpUrl, key) {
+  //wpUrl = 'George Washington';
+  //key = 'born';
+  //returns 1732
+  
+  if (wpUrl.slice(0,4) !== 'http') {
+    wpUrl = wikiUrl(wpUrl)
+  }
+  
+  var cache = CacheService.getScriptCache();
+  var wpPage = cache.get(wpUrl);
+  if (!wpPage) {
+    wpPage = UrlFetchApp.fetch(wpUrl).getContentText();
+    try {
+     cache.put(wpUrl, wpPage);
+    } catch(e) {}
+  }
+  
+  var document = XmlService.parse(wpPage);
+  var elements = document.getRootElement().getDescendants();
+  var infoBoxTable = elements.filter(function(element) { 
+    return element.getName &&
+      element.getName() === 'table' &&
+      element.getAttribute('class') &&
+      element.getAttribute('class').getValue().indexOf('infobox') > -1; 
+  })[0];
+  
+  if (!(infoBoxTable && infoBoxTable.getDescendants)) { return "No infobox found for page: "+wpUrl; }
+  
+  // look for exact key
+  var tableElements = infoBoxTable.getDescendants();
+  for (var i=0; i < tableElements.length; ++i) {
+    var element = tableElements[i];
+    if (element.getName && element.getName() === 'th') {
+      if (element.getValue().toLowerCase().trim() === key.toLowerCase().trim()) {  
+        var j = 1;   
+        // find the next <td> element, since text nodes and actual html nodes are interspersed
+        while (!(tableElements[i+j].getName && tableElements[i+j].getName() === 'td')) {
+          j += 1; 
+        }
+        return tableElements[i+j].getValue();
+      }
+    }
+  }
+  
+  // if exact key not found, look for a cell that contains `key`
+  var tableElements = infoBoxTable.getDescendants();
+  for (var i=0; i < tableElements.length; ++i) {
+    var element = tableElements[i];
+    if (element.getName && element.getName() === 'th') {
+      if (element.getValue().toLowerCase().trim().indexOf(key.toLowerCase().trim()) > -1) {  
+        var j = 1;   
+        // find the next <td> element, since text nodes and actual html nodes are interspersed
+        while (!(tableElements[i+j].getName && tableElements[i+j].getName() === 'td')) {
+          j += 1; 
+        }
+        return tableElements[i+j].getValue();
+      }
+    }
+  }
+  
+  return "Key '"+key+"' not found in infobox for page: "+wpUrl;
+}
+
+
+
+/**
+ * Get the wikipedia url for some text.
+ *
+ * @param {text} The text to turn into a wikipedia url.
+ * @return A special Wikipedia URL that may or may not be right.
+ * @customfunction
+ */
+function wikiUrl(str) {
+  str = str.replace(/\s/g,'+')
+  return 'https://en.wikipedia.org/w/index.php?title=Special:Search&search='+str;
+}
