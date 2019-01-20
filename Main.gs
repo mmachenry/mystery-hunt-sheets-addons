@@ -6,9 +6,19 @@ function normalizeString(text) {
 
 // Returns the nth non-whitespace character of the given string, starting at 1.
 // NTH("Hello, world!", 6) => "W"
+// nth("abcd", 2, 4) => "BD"
 function nth(text, n) {
-  if (n < 1 || n > text.length) return '?'
-  return normalizeString(text).slice(n - 1, n);
+  text = normalizeString(text);
+  var characters = '';
+  for (var i = 1; i < arguments.length; ++i) {
+    var n = arguments[i];
+    if (n < 1 || n > text.length) {
+      characters += '?';
+    } else {
+      characters += text[n-1];
+    }
+  }
+  return characters;
 }
 
 // Returns the number of times a given character appears in a given string.
@@ -191,4 +201,16 @@ function wikiLookup(wpUrl, key) {
 function wikiUrl(str) {
   str = str.replace(/\s/g,'+')
   return 'https://en.wikipedia.org/w/index.php?title=Special:Search&search='+str;
+}
+
+/**
+ * Get the nutrimatic url for a query.
+ *
+ * @param {text} The text to turn into a nutrimatic url.
+ * @return A link to the Nutrimatic.org results for this query.
+ * @customfunction
+ */
+function nutrimatic(query) {
+  query = encodeURIComponent(query);
+  return 'https://nutrimatic.org/?q='+query+'&go=Go';
 }
