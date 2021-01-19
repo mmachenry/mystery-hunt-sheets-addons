@@ -2,15 +2,15 @@
 
 // Given a string, return a cell block with its letters along the diagonal
 function diagonalize(str) {
-  var res = []
-  var letters = str.split("")
+  var res = [];
+  var letters = str.split("");
   for (var i=0; i < str.length; i++) {
-    var line = []
-    line[i] = letters[i]
-    res.push(line)
+    var line = [];
+    line[i] = letters[i];
+    res.push(line);
   }
 
-  return res
+  return res;
 }
 
 // Take a range and convert it into a column of concatenated rows
