@@ -1,3 +1,17 @@
+// When adding a new function, don't forget to update the reference tab!
+
+// Take a range and convert it into a column of concatenated rows
+function linearize(vals) {
+  var res = [];
+  for (var y=0; y < vals.length; y++) {
+    for (var x=0; x < vals[y].length; x++) {
+      res.push([vals[y][x]]);
+    }
+  }
+
+  return res;
+}
+
 // Converts a string to capital letters without whitespace or punctuation, and uppercases.
 // "Hello, World!" => "HELLOWORLD"
 function normalizeString(text) {
