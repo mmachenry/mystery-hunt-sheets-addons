@@ -1,3 +1,5 @@
+// When adding a new function, don't forget to update the reference tab!
+
 // Converts a string to capital letters without whitespace or punctuation, and uppercases.
 // "Hello, World!" => "HELLOWORLD"
 function normalizeString(text) {
@@ -104,6 +106,11 @@ function reverseString(str) {
     var reverseArray = splitString.reverse();
     var joinArray = reverseArray.join("");
     return joinArray;
+}
+
+// Split a string into individual letters
+function splitString(str) {
+  return [str.split("")]
 }
 
 // The unique characters of the given string.
