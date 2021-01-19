@@ -110,7 +110,7 @@ function reverseString(str) {
 
 // Split a string into individual letters
 function splitString(str) {
-  return [str.split("")]
+  return [str.split("")];
 }
 
 // The unique characters of the given string.
