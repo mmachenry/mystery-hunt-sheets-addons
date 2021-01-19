@@ -1,5 +1,18 @@
 // When adding a new function, don't forget to update the reference tab!
 
+// Given a string, return a cell block with its letters along the diagonal
+function diagonalize(str) {
+  var res = []
+  var letters = str.split("")
+  for (var i=0; i < str.length; i++) {
+    var line = []
+    line[i] = letters[i]
+    res.push(line)
+  }
+
+  return res
+}
+
 // Take a range and convert it into a column of concatenated rows
 function linearize(vals) {
   var res = [];
