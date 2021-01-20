@@ -125,14 +125,14 @@ function commonChars(x, y) {
 	return ret.join("");
 }
 
-/** Returns the Caeser shifted string, ignoring non alphabetic letters.
+/** Returns the Caesar shifted string, ignoring non alphabetic letters.
  * 
  * @param {number} offset
  * @param {string} input
  * @return shifted string
  * @customfunction
  */
-function caeserShift (offset, input) {
+function caesarShift (offset, input) {
   var result = [];
   for (var i = 0; i < input.length; i++) {
     var n = alphaToNum(input[i]);
