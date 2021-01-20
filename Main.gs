@@ -133,6 +133,11 @@ function reverseString(str) {
     return joinArray;
 }
 
+// Split a string into individual letters
+function splitString(str) {
+  return [str.split("")];
+}
+
 // The unique characters of the given string.
 function uniqueChars(text) {
     var unique= "";
