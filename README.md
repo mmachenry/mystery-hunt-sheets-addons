@@ -1,7 +1,7 @@
 # mystery-hunt-sheets-addons
 A set of useful Google Sheets functions for Mystery Hunt.
 
-Got to Code.gs and use GitHub's raw file feature to make it easy to copy and
+Go to Code.gs and use GitHub's raw file feature to make it easy to copy and
 paste all of the code.
 
 Got to your Google sheet, select the Tools menu and then select Script Editor.
