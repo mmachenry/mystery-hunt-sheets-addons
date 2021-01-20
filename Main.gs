@@ -1,4 +1,12 @@
 // When adding a new function, don't forget to update the reference tab!
+// When updating the template, note the date in the next line.
+// Last updated yyyy-mm-dd from https://github.com/mmachenry/mystery-hunt-sheets-addons/blob/master/Main.gs
+
+// Split a string on regexp match. 
+function regexSplit(str, re) {
+  var r = new RegExp(re, "g");
+  return str.split(r);
+}
 
 // Given a string, return a cell block with its letters along the diagonal
 function diagonalize(str) {
