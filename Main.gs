@@ -1,14 +1,27 @@
 // When adding a new function, don't forget to update the reference tab!
-// When updating the template, note the date in the next line.
-// Last updated yyyy-mm-dd from https://github.com/mmachenry/mystery-hunt-sheets-addons/blob/master/Main.gs
+// Last updated 2021-01-20 from https://github.com/mmachenry/mystery-hunt-sheets-addons/blob/master/Main.gs
 
-// Split a string on regexp match. 
+/**
+ * Split a string on regexp match. 
+ * 
+ * @param {string} str - input to split
+ * @param {string} re - regular expression to split on
+ * @return an array of the matching substrings
+ * @customfunction
+ */
 function regexSplit(str, re) {
-  var r = new RegExp(re, "g");
-  return str.split(r);
+  var r = new RegExp(re, "g")
+  return str.split(r)
 }
 
-// Given a string, return a cell block with its letters along the diagonal
+/**
+ * Given a string, return a cell block with its letters along the diagonal
+ * 
+ * @param {string} str - input string
+ * @return a block of cells with the input characters along the diagonal
+ * @customfunction
+ */
+
 function diagonalize(str) {
   var res = [];
   var letters = str.split("");
@@ -21,7 +34,13 @@ function diagonalize(str) {
   return res;
 }
 
-// Take a range and convert it into a column of concatenated rows
+/**
+ * Take a range and convert it into a column of concatenated rows
+ * 
+ * @param {string} vals - selection of cells to concatenate e.g. A1:C5
+ * @return a row of cells with the values from the input selection
+ * @customfunction
+ */
 function linearize(vals) {
   var res = [];
   for (var y=0; y < vals.length; y++) {
@@ -33,15 +52,29 @@ function linearize(vals) {
   return res;
 }
 
-// Converts a string to capital letters without whitespace or punctuation, and uppercases.
-// "Hello, World!" => "HELLOWORLD"
+/**
+ * Converts a string to capital letters without whitespace or punctuation, and uppercases.
+ * e.g. "Hello, World!" => "HELLOWORLD"
+ * 
+ * @param {string} text - input text to normalize
+ * @return normalized text
+ * @customfunction
+ */
 function normalizeString(text) {
   return text.toUpperCase().replace(/[^A-Z]/g, "");
 }
 
-// Returns the nth non-whitespace character of the given string, starting at 1.
-// NTH("Hello, world!", 6) => "W"
-// nth("abcd", 2, 4) => "BD"
+/**
+ * Returns the nth non-whitespace character of the given string, starting at 1.
+ * 
+ * NTH("Hello, world!", 6) => "W"
+ * nth("abcd", 2, 4) => "BD"
+ * 
+ * @param {string} text - input text
+ * @param {...number} n - one or more positions to return
+ * @return string containing the letters from the specified positions
+ * @customfunction
+ */
 function nth(text, n) {
   text = normalizeString(text);
   var characters = '';
@@ -56,8 +89,16 @@ function nth(text, n) {
   return characters;
 }
 
-// Returns the number of times a given character appears in a given string.
-// countChar("abaab", "a") => 3
+/**
+ * Returns the number of times a given character appears in a given string.
+ * 
+ * countChar("abaab", "a") => 3
+ * 
+ * @param {string} text - input text
+ * @param {string} char - character to count
+ * @return number of times the character was found
+ * @customfunction
+ */
 function countChar(text, char) {
   var total = 0;
   for (var i = 0; i < text.length; ++i) {
@@ -66,8 +107,16 @@ function countChar(text, char) {
   return total;
 }
 
-// Given two strings, return all characters that appear in the same place in both strings.
-// commonChars("ghxxhxh", "ghyyh") => "ghh"
+/**
+ * Given two strings, return all characters that appear in the same place in both strings.
+ * 
+ * commonChars("ghxxhxh", "ghyyh") => "ghh"
+ * 
+ * @param {string} x - first string to examine
+ * @param {string} y - second string to examine
+ * @return string containing common characters
+ * @customfunction
+ */
 function commonChars(x, y) {
 	var ret = [];
 	for (var i = 0; i < x.length && i < y.length; ++i) {
@@ -76,7 +125,13 @@ function commonChars(x, y) {
 	return ret.join("");
 }
 
-// Returns the Caeser shifted string, ignoring non alphabetic letters.
+/** Returns the Caeser shifted string, ignoring non alphabetic letters.
+ * 
+ * @param {number} offset
+ * @param {string} input
+ * @return shifted string
+ * @customfunction
+ */
 function caeserShift (offset, input) {
   var result = [];
   for (var i = 0; i < input.length; i++) {
@@ -90,7 +145,12 @@ function caeserShift (offset, input) {
   return result.join('');
 }
 
-// The 1-26 index of the given letter, upper or lower case, or null if nonalpha.
+/** The 1-26 index of the given letter, upper or lower case, or null if nonalpha.
+ * 
+ * @param {string} input - single letter
+ * @return 1-26 for A-Z or a-z, null otherwise
+ * @customfunction
+ */
 function alphaToNum (input) {
     charNum = input.charCodeAt(0);
     if (charNum >= 65 && charNum <= 90) {
@@ -102,7 +162,12 @@ function alphaToNum (input) {
     }
 }
 
-// Converts 1-26 to alphabetical equivalent.
+/** Converts 1-26 to alphabetical equivalent.
+ * 
+ * @param {number} input - number 1-26
+ * @return the numbered letter
+ * @customfunction
+ */
 function numToAlpha (input) {
     if (input >= 1 && input <= 26) {
         return String.fromCharCode(65+input-1);
@@ -111,7 +176,12 @@ function numToAlpha (input) {
     }
 }
 
-// The point value of a give word using the given point system.
+/** The point value of a give word using the given point system.
+ * 
+ * @param {string} input - word to score
+ * @param {map} points - map of letter to value
+ * @return total value
+ */
 function wordTilePoints (input, points) {
     var word = normalizeString(input);
     var total = 0;
@@ -121,19 +191,34 @@ function wordTilePoints (input, points) {
     return total;
 }
 
-// The point value of the given word in Scrabble.
+/** The point value of the given word in Scrabble.
+ * 
+ * @param {string} input - word to score
+ * @return value of the word
+ * @customfunction
+ */
 function scrabblePoints (input) {
     var points = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
     return wordTilePoints(input, points);
 }
 
-// The point value of the given word in Words With Friends.
+/** The point value of the given word in Words With Friends.
+ * 
+ * @param {string} input - word to score
+ * @return value of the word
+ * @customfunction
+ */
 function wordsWithFriendsPoints (input) {
     var points = [1,4,4,2,1,4,3,3,1,10,5,2,4,2,1,4,10,1,1,1,2,5,4,8,3,10];
     return wordTilePoints(input, points);
 }
 
-// Reverse the given string
+/** Reverse the given string
+ * 
+ * @param {string} str - string to reverse
+ * @return reversed string
+ * @customfunction
+ */
 function reverseString(str) {
     var splitString = str.split("");
     var reverseArray = splitString.reverse();
@@ -141,12 +226,22 @@ function reverseString(str) {
     return joinArray;
 }
 
-// Split a string into individual letters
+/** Split a string into individual letters
+ * 
+ * @param {string} str - input string
+ * @return row of cells containing the individual letters
+ * @customfunction
+ */
 function splitString(str) {
   return [str.split("")];
 }
 
-// The unique characters of the given string.
+/** The unique characters of the given string.
+ * 
+ * @param {string} text - input string
+ * @return string made of the unique letters in the input
+ * @customfunction
+ */
 function uniqueChars(text) {
     var unique= "";
     for(var i = 0; i < text.length; i++) {
@@ -228,8 +323,6 @@ function wikiLookup(wpUrl, key) {
   
   return "Key '"+key+"' not found in infobox for page: "+wpUrl;
 }
-
-
 
 /**
  * Get the wikipedia url for some text.
