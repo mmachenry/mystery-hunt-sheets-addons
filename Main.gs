@@ -375,7 +375,7 @@ function intersection(setA, setB) {
 function difference(setA, setB) {
   var common = new Map();
   setA.map(row => row.map(cell => common.set(cell, 1)));
-  setB.map(row => row.map(cell => {if (common.has(cell)) {common.set(cell, 2)}}));
+  setB.map(row => row.map(cell => {if (common.has(cell)) {common.set(cell, 2)} else {common.set(cell, 1)}}));
   var res = [];
   common.forEach((v,k) => {if (v==1) {res.push(k)}})
   return res;
