@@ -347,3 +347,36 @@ function nutrimatic(query) {
   query = encodeURIComponent(query);
   return 'https://nutrimatic.org/?q='+query+'&go=Go';
 }
+
+/**
+ * Find the intersection of two sets.
+ * 
+ * @param {Array<Array<number>>} setA
+ * @param {Array<Array<number>>} setB
+ * @return list of cells that exist in both sets
+ * @customfunction
+ */
+function intersection(setA, setB) {
+  var common = new Map();
+  var res = [];
+  setA.map(row => row.map(cell => common.set(cell)));
+  setB.map(row => row.map(cell => {if (common.has(cell)) { res.push(cell)}}));
+  return res;
+}
+
+/**
+ * Find the difference between two sets.
+ * 
+ * @param {Array<Array<number>>} setA
+ * @param {Array<Array<number>>} setB
+ * @return list of cells that don't exist in both sets
+ * @customfunction
+ */
+function difference(setA, setB) {
+  var common = new Map();
+  setA.map(row => row.map(cell => common.set(cell, 1)));
+  setB.map(row => row.map(cell => {if (common.has(cell)) {common.set(cell, 2)} else {common.set(cell, 1)}}));
+  var res = [];
+  common.forEach((v,k) => {if (v==1) {res.push(k)}})
+  return res;
+}
