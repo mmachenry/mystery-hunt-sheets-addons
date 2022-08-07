@@ -374,6 +374,18 @@ function qat(query, dictionary="UKACD") {
 }
 
 /**
+ * Get the OneLook url for a query.
+ *
+ * @param {string} query The text to turn into a OneLook url.
+ * @return A link to the OneLook.com results for this query.
+ * @customfunction
+ */
+function onelook(query) {
+  query = encodeURIComponent(query);
+  return 'https://www.onelook.com/?w='+query+'&ssbp=1';
+}
+
+/**
  * Find the intersection of two sets.
  * 
  * @param {Array<Array<number>>} setA
