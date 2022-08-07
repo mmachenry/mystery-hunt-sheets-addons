@@ -384,7 +384,9 @@ function difference(setA, setB) {
 /**
  * Translates a morse code string.
  * 
- * @param {str} The string to be translated. If the string contains multiple codes, they will be split by any sequence of non-dot or non-dash characters.
+ * @param {string} str The string to be translated. If the string contains
+ multiple codes, they will be split by any sequence of non-dot or non-dash
+ characters.
  * @return The translated string, with ? replacing unknown codes.
  * @customfunction
  */
