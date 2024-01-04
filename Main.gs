@@ -1,5 +1,6 @@
 // When adding a new function, don't forget to update the reference tab!
-// Last updated 2021-01-20 from https://github.com/mmachenry/mystery-hunt-sheets-addons/blob/master/Main.gs
+// Repo: https://github.com/mmachenry/mystery-hunt-sheets-addons/blob/master/Main.gs
+// Last pulled: <TBD>
 
 /**
  * Split a string on regexp match. 
@@ -236,6 +237,16 @@ function splitString(str) {
   return [str.split("")];
 }
 
+/** Sort the characters in a string
+ * 
+ * @param {string} str - input string
+ * @return sorted string
+ * @customfunction
+ */
+function sortString(str) {
+  return str.split("").sort().join("");
+}
+
 /** The unique characters of the given string.
  * 
  * @param {string} text - input string
@@ -379,4 +390,36 @@ function difference(setA, setB) {
   var res = [];
   common.forEach((v,k) => {if (v==1) {res.push(k)}})
   return res;
+}
+
+/** 
+ * Returns the URL contained in a hyperlinked cell. Supports ranges.
+ * 
+ * @param {string}
+ * @return URL from the given link
+ * @customfunction
+ * 
+ * from https://stackoverflow.com/questions/35230764/how-to-extract-url-from-link-in-google-sheets-using-a-formula
+ */
+function linkURL(reference) {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var formula = SpreadsheetApp.getActiveRange().getFormula();
+  var args = formula.match(/=\w+\((.*)\)/i);
+  try {
+    var range = sheet.getRange(args[1]);
+  }
+  catch(e) {
+    throw new Error(args[1] + ' is not a valid range');
+  }
+
+  var formulas = range.getRichTextValues();
+  var output = [];
+  for (var i = 0; i < formulas.length; i++) {
+    var row = [];
+    for (var j = 0; j < formulas[0].length; j++) {
+      row.push(formulas[i][j].getLinkUrl());
+    }
+    output.push(row);
+  }
+  return output
 }
