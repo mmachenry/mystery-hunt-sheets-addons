@@ -524,6 +524,7 @@ function morse(str) {
   });
 
   return characters.join("");
+}
 
 /** 
  * Returns the URL contained in a hyperlinked cell. Supports ranges.
