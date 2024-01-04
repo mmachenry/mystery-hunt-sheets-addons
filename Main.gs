@@ -452,6 +452,85 @@ function difference(setA, setB) {
 }
 
 /**
+ * Takes pairs of cardinal directions, return semaphore flag values.
+ * 
+ * @param {Array<Array<string>>} dirs - direction pairs
+ * @returns parsed values
+ * @customfunction
+ */
+function semaphore(dirs) {
+  const alphaMap = new Map();
+  const numMap = new Map();
+  const defs = [
+    ["S","SE","A", "1"],
+    ["S","E","B", "2"],
+    ["S","NE","C", "3"],
+    ["S","N","D", "4"],
+    ["N","S","D", "4"],
+    ["NW","S","E", "5"],
+    ["W","S","F", "6"],
+    ["SW","S","G", "7"],
+    ["SE","E","H", "8"],
+    ["SE","N","I", "9"],
+    ["W","N","J", "<alphabetic>"],
+    ["N","SE","K", "0"],
+    ["NW","SE","L"],
+    ["W","SE","M"],
+    ["SW","SE","N"],
+    ["NE","E","O"],
+    ["N","E","P"],
+    ["NW","E","Q"],
+    ["W","E","R"],
+    ["SW","E","S"],
+    ["N","NE","T"],
+    ["NW","NE","U"],
+    ["SW","N","V"],
+    ["W","NW","W"],
+    ["SW","NW","X"],
+    ["W","NE","Y"],
+    ["W","SW","Z"],
+    ["NW","N","<Numerical sign>"],
+    ["SW","NE","<Annul sign>"],
+  ];
+  
+  defs.forEach((d) => {
+    alphaMap.set(d[0]+"-"+d[1], d[2]);
+    alphaMap.set(d[1]+"-"+d[0], d[2]);
+    if (d[3]) {
+      numMap.set(d[0]+"-"+d[1], d[3]);
+      numMap.set(d[1]+"-"+d[0], d[3]);
+    }
+  })
+
+  var res = [];
+  var mode = "alpha";
+  dirs.forEach((d) => {
+    var k = d[0]+"-"+d[1];
+    if (mode == "alpha") {
+      if (alphaMap.has(k)) {
+        var v = alphaMap.get(k);
+        res.push(v);
+        if (v == "<Numerical sign>") {
+          mode = "numeric";
+        }        
+      } else {
+        res.push("?");
+      }
+    } else {
+      if (numMap.has(k)) {
+        var v = numMap.get(k);
+        res.push(v);
+        mode = "alpha";
+      } else {
+        res.push("?");
+      }
+    }
+  });
+
+  return res;
+}
+
+/**
  * Translates a morse code string.
  * 
  * @param {string} str The string to be translated. If the string contains
