@@ -177,6 +177,28 @@ function numToAlpha (input) {
     }
 }
 
+/**
+ * Converts binary number 1-26 to alphabetical equivalent.
+ * 
+ * @param {number} Binary number from 1-26.
+ * @return The numbered letter.
+ * @customfunction
+ */
+function binaryNumToAlpha(number) {
+  return numToAlpha(parseInt(number, 2));
+}
+
+/**
+ * Converts binary ASCII/Unicode code to its corresponding character.
+ * 
+ * @param {number} Binary number representing an ASCII/Unicode code.
+ * @return The corresponding character.
+ * @customfunction
+ */
+function binaryCodeToChar(number) {
+  return String.fromCodePoint(parseInt(number, 2));
+}
+
 /** The point value of a give word using the given point system.
  * 
  * @param {string} input - word to score
