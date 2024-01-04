@@ -360,6 +360,43 @@ function nutrimatic(query) {
 }
 
 /**
+ * Get the Qat url for a query.
+ *
+ * @param {string} query The text to turn into a Qat url.
+ * @param {string} dictionary Which dictionary to use. Case insensitive. Defaults to UKACD.
+ * @return A link to the Qat results for this query.
+ * @customfunction
+ */
+function qat(query, dictionary="UKACD") {
+  dictionary = dictionary.toUpperCase();
+  const dictionaries = ["UKACD", "YAWL", "ABLE", "MOBY", "PDL", "BNC", "UNION"];
+
+  // Select the dictionary. If the dictionary is invalid, defaults to UKACD.
+  dictionaryNum = 0;
+  for (var i = 0; i < dictionaries.length; ++i) {
+    if (dictionary == dictionaries[i]) {
+      dictionaryNum = i;
+      break;
+    }
+  }
+
+  query = encodeURIComponent(query);
+  return 'https://www.quinapalus.com/cgi-bin/qat?pat='+query+'&ent=Search&dict='+dictionaryNum;
+}
+
+/**
+ * Get the OneLook url for a query.
+ *
+ * @param {string} query The text to turn into a OneLook url.
+ * @return A link to the OneLook.com results for this query.
+ * @customfunction
+ */
+function onelook(query) {
+  query = encodeURIComponent(query);
+  return 'https://www.onelook.com/?w='+query+'&ssbp=1';
+}
+
+/**
  * Find the intersection of two sets.
  * 
  * @param {Array<Array<number>>} setA
