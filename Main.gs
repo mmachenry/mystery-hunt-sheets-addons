@@ -451,6 +451,80 @@ function difference(setA, setB) {
   return res;
 }
 
+/**
+ * Translates a morse code string.
+ * 
+ * @param {string} str The string to be translated. If the string contains
+ multiple codes, they will be split by any sequence of non-dot or non-dash
+ characters.
+ * @return The translated string, with ? replacing unknown codes.
+ * @customfunction
+ */
+function morse(str) {
+  const charMap = new Map();
+  const defs = [
+    [".-", "A"],
+    ["-...", "B"],
+    ["-.-.", "C"],
+    ["-..", "D"],
+    [".", "E"],
+    ["..-.", "F"],
+    ["--.", "G"],
+    ["....", "H"],
+    ["..", "I"],
+    [".---", "J"],
+    ["-.-", "K"],
+    [".-..", "L"],
+    ["--", "M"],
+    ["-.", "N"],
+    ["---", "O"],
+    [".--.", "P"],
+    ["--.-", "Q"],
+    [".-.", "R"],
+    ["...", "S"],
+    ["-", "T"],
+    ["..-", "U"],
+    ["...-", "V"],
+    [".--", "W"],
+    ["-..-", "X"],
+    ["-.--", "Y"],
+    ["--..", "Z"],
+    [".----", "1"],
+    ["..---", "2"],
+    ["...--", "3"],
+    ["....-", "4"],
+    [".....", "5"],
+    ["-....", "6"],
+    ["--...", "7"],
+    ["---..", "8"],
+    ["----.", "9"],
+    ["-----", "0"]
+  ];
+
+  // Fill out charMap with our code to character assignment
+  defs.forEach((d) => {
+    charMap.set(d[0], d[1]);
+  });
+
+  // Replace each code with the corresponding character
+  var morseCharacters = str.split(/[^.-]+/g);
+  var characters = morseCharacters.map((c) => {
+    if (charMap.has(c)) {
+      return charMap.get(c);
+    }
+    // Due to how str.split works, first and last character may be empty,
+    // don't add question mark in those cases
+    else if (!c) {
+      return "";
+    }
+    // Add question mark for any codes that are unknown
+    else {
+      return "?";
+    }
+  });
+
+  return characters.join("");
+
 /** 
  * Returns the URL contained in a hyperlinked cell. Supports ranges.
  * 
